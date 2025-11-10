@@ -1,0 +1,6 @@
+\
+    # 1=有効, 0=無効
+    MOVE_ENABLED=1
+    MINIMIZE_ENABLED=0
+    # 秒数（既定=300=5分）
+    MINIMIZE_DELAY=300

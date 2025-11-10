@@ -1,0 +1,28 @@
+\
+    #!/usr/bin/env bash
+    set -e
+    CONF="$HOME/.config/site_window_router.conf"
+    mkdir -p "$(dirname "$CONF")"; touch "$CONF"
+    case "${1:-}" in
+      move)
+        case "${2:-}" in
+          on)  sed -i 's/^MOVE_ENABLED=.*/MOVE_ENABLED=1/; t; $ aMOVE_ENABLED=1' "$CONF" ;;
+          off) sed -i 's/^MOVE_ENABLED=.*/MOVE_ENABLED=0/; t; $ aMOVE_ENABLED=0' "$CONF" ;;
+          *) echo "usage: swrctl move on|off"; exit 1 ;;
+        esac ;;
+      minimize)
+        case "${2:-}" in
+          on)  sed -i 's/^MINIMIZE_ENABLED=.*/MINIMIZE_ENABLED=1/; t; $ aMINIMIZE_ENABLED=1' "$CONF" ;;
+          off) sed -i 's/^MINIMIZE_ENABLED=.*/MINIMIZE_ENABLED=0/; t; $ aMINIMIZE_ENABLED=0' "$CONF" ;;
+          *) echo "usage: swrctl minimize on|off"; exit 1 ;;
+        esac ;;
+      delay)
+        [[ "${2:-}" =~ ^[0-9]+$ ]] || { echo "usage: swrctl delay <seconds>"; exit 1; }
+        sed -i "s/^MINIMIZE_DELAY=.*/MINIMIZE_DELAY=${2}/; t; \$ aMINIMIZE_DELAY=${2}" "$CONF" ;;
+      status)
+        echo "---- $(date) ----"
+        grep -E '^(MOVE_ENABLED|MINIMIZE_ENABLED|MINIMIZE_DELAY)=' "$CONF" || true ;;
+      *)
+        echo "usage: swrctl {move on|off|minimize on|off|delay SECONDS|status}"
+        exit 1 ;;
+    esac

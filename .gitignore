@@ -1,0 +1,10 @@
+\
+    .DS_Store
+    Thumbs.db
+    .idea/
+    .vscode/
+    __pycache__/
+    *.pyc
+    *.log
+    # 個人環境ファイル（実体は $HOME に置く）
+    config/site_window_router.conf
